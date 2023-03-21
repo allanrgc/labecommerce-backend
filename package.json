@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "Package para labecommerce",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "paroimpa": "node ./index.js",
+    "start": "tsc && node ./build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/allanrgc/labecommerce-backend/issues"
   },
-  "homepage": "https://github.com/allanrgc/labecommerce-backend#readme"
+  "homepage": "https://github.com/allanrgc/labecommerce-backend#readme",
+  "devDependencies": {
+    "@types/node": "^18.15.5",
+    "typescript": "^5.0.2"
+  }
 }
