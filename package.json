@@ -1,0 +1,24 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "Package para labecommerce",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "paroimpa": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allanrgc/labecommerce-backend.git"
+  },
+  "keywords": [
+    "ecom"
+  ],
+  "author": "Allan Rafael",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allanrgc/labecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/allanrgc/labecommerce-backend#readme"
+}
