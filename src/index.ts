@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
-import { users, products, purchase, createUser, getAllUsers, getAllProducts, getAllProductsById, queryProductsByName } from "./database"
+import { users, products, purchase, CATEGORY, createUser, getAllUsers, getAllProducts, getAllProductsById, queryProductsByName } from "./database"
 import { TProduct, TUser, TPurchase } from './types'
 // console.log(users, products, purchase)
 const app = express()
@@ -38,6 +38,7 @@ app.get('/products/search', (req: Request, res: Response) => {
     )
     res.status(200).send(result)
 })
+
 
 // POST criando um novo Usuário, produto e compra
 
@@ -111,4 +112,66 @@ app.post ('/purchase', (req: Request, res: Response) => {
   res.status(201).send("Compra realizada. Você rebecerá seu produto em breve")
 //   }
   
+})
+
+// GET produto by ID
+app.get('/products/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+    const productById = products.find((product) => product.id === id)
+    res.status(200).send(productById)
+})
+// GET Purchase by User ID
+app.get('/purchase/:userId', (req: Request, res: Response) => {
+    const userId = req.params.userId
+    const purchaseByUserId = purchase.find((purch) => purch.userId === userId)
+    res.status(200).send(purchaseByUserId)
+})
+// DELETE by id
+app.delete('/users/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+    const deleteUser = users.findIndex((user) => user.id === id)
+
+    if (deleteUser >= 0){
+        users.splice(deleteUser, 1)
+    }
+    res.status(200).send("Usuário apagado com sucesso")
+})
+app.delete('/products/:id', (req: Request, res: Response) => {
+    const id = req.params.id
+    const deleteProduct = products.findIndex((product) => product.id === id)
+
+    if (deleteProduct >= 0){
+        products.splice(deleteProduct, 1)
+    }
+    res.status(200).send("Usuário apagado com sucesso")
+})
+
+//PUT - Editar by id
+
+app.put("/users/:id", (req:Request, res:Response) => {
+    const id = req.params.id
+    const newEmail = req.body.newEmail as string | undefined
+    const newPassword = req.body.newPassword as string| undefined
+    //edição de um elemento do array de users
+    const userToEdit = users.find((user) => user.id === id)
+    if (userToEdit){
+        userToEdit.email = newEmail || userToEdit.email
+        userToEdit.password = newPassword || userToEdit.password
+    }
+    res.status(200).send("Atualização realizada com sucesso")
+})
+
+app.put("/products/:id", (req:Request, res:Response) => {
+    const id = req.params.id
+    const newName = req.body.newName as string | undefined
+    const newPrice = req.body.price as number
+    const newCategory = req.body.newCategory as CATEGORY | undefined
+    //edição de um elemento do array de products
+    const productToEdit = products.find((product) => product.id === id)
+    if (productToEdit){
+        productToEdit.name = newName || productToEdit.name
+        productToEdit.price = isNaN(newPrice) ? productToEdit.price : newPrice
+        productToEdit.category = newCategory || productToEdit.category
+    }
+    res.status(200).send("Atualização realizada com sucesso")
 })

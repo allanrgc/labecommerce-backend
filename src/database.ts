@@ -1,6 +1,6 @@
 import { TUser, TProduct, TPurchase } from "./types"
 
-enum CATEGORY {
+export enum CATEGORY {
     ELETRONIC = "Eletronic",
     HEALTY = "Healty",
     FOOD = "Food"
