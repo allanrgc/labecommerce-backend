@@ -9,11 +9,11 @@ export enum CATEGORY {
 
 export const users: TUser[] = [
     {
-        id: 'zeroum',
+        id: 'u001',
         email: 'emaildo@gmeidev.com',
         password: 'senhadagota'
     }, {
-        id: 'zerodois',
+        id: 'u002',
         email: 'miminviacarta@gmeioso.com',
         password: 'senhadoquere'
     }
@@ -21,27 +21,27 @@ export const users: TUser[] = [
 
 export const products: TProduct[] = [
     {
-        id: 'zerotrei',
+        id: 'p003',
         name: "Almofada",
         price: 2,
         category: CATEGORY.HEALTY
     }, {
-        id: 'zerocatro',
+        id: 'p004',
         name: "Pipoca",
         price: 1,
-        category: CATEGORY.HEALTY
+        category: CATEGORY.FOOD
     }
 ];
 
 export const purchase: TPurchase[] = [
     {
-        userId: 'zerotrei',
-        productId: 'zeroZeroUm',
+        userId: 'b001',
+        productId: 'p003',
         quantity: 3,
         totalPrice: products[0].price * 3
     }, {
-        userId: 'zerocatro',
-        productId: 'zeroZeroDois',
+        userId: 'b002',
+        productId: 'p004',
         quantity: 5,
         totalPrice: products[1].price * 5
     }
