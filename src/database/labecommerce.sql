@@ -14,6 +14,10 @@ VALUES ("u002", "miminviacarta@gmeioso.com", "senhadoquere");
 INSERT INTO users(id, email, password)
 VALUES ("u003", "emaildoallan@gmail.com", "senhasenhosa");
 
+UPDATE users SET password = "1445787" WHERE id = "u002";
+
+SELECT * FROM users ORDER BY email ASC;
+
 CREATE TABLE products (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     name TEXT NOT NULL,
@@ -34,5 +38,10 @@ INSERT INTO products(id, name, price, category)
 VALUES ("p005", "Doritos", 7, "Food");
 
 UPDATE products SET price = 10.55 WHERE id = "p002";
+
+SELECT * FROM products WHERE category IN ("Eletronic");
+SELECT * FROM products WHERE id IN ("p001", "p002");
+SELECT * FROM products ORDER BY price ASC LIMIT 20 OFFSET 0;
+SELECT * FROM products WHERE price >= 100 AND price <= 300;
 
 DELETE from products WHERE id = "123456";
