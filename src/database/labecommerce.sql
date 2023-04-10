@@ -5,15 +5,15 @@ CREATE TABLE users (
     password TEXT NOT NULL
 );
 
-SELECT * from users;
+SELECT * from purchases;
 
 INSERT INTO users(id, email, password)
-VALUES ("u001", "emaildo@gmeidev.com", "senhadagota");
+VALUES ("u001", "anabarbiepocket@gmeioso.com", "senhadagota");
 INSERT INTO users(id, email, password)
-VALUES ("u002", "miminviacarta@gmeioso.com", "senhadoquere");
+VALUES ("u002", "rafaelgc83@gmail.com", "senhadoquere");
 INSERT INTO users(id, email, password)
-VALUES ("u003", "emaildoallan@gmail.com", "senhasenhosa");
-
+VALUES ("u003", "allanrgc@gmail.com", "senhasenhosa");
+DROP TABLE users;
 UPDATE users SET password = "1445787" WHERE id = "u002";
 
 SELECT * FROM users ORDER BY email ASC;
@@ -45,3 +45,76 @@ SELECT * FROM products ORDER BY price ASC LIMIT 20 OFFSET 0;
 SELECT * FROM products WHERE price >= 100 AND price <= 300;
 
 DELETE from products WHERE id = "123456";
+
+CREATE TABLE purchases (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    buyer_id TEXT NOT NULL,
+    total_price REAL NOT NULL,
+    paid INTEGER NOT NULL DEFAULT(0),
+    delivered_at TEXT DEFAULT (DATETIME("now", "localtime")) NOT NULL,
+    
+    Foreign Key (buyer_id) REFERENCES users(id)
+);
+DROP TABLE purchases;
+
+INSERT INTO purchases
+VALUES
+    ("pu001", "u001", 21, 0, NULL),
+    ("pu002", "u001", 10.50, 0, NULL),
+    ("pu003", "u002", 2, 0, NULL),
+    ("pu004", "u002", 7, 0, NULL);
+
+UPDATE purchases SET delivered_at = DATETIME('now', "localtime") WHERE id = "pu002";
+SELECT * FROM purchases;
+
+SELECT
+    users.id as userID,
+    users.email,
+    purchases.id as purchaseID,
+    purchases.total_price,
+    purchases.paid,
+    purchases.delivered_at,
+    purchases.buyer_id
+    FROM users
+    INNER JOIN purchases
+    ON users.id = purchases.buyer_id;
+
+INSERT INTO purchases
+VALUES
+    ("pu005", 12, 1, DATETIME("now", "localtime"), "u003");
+
+SELECT * FROM purchases INNER JOIN users ON buyer_id = users.id WHERE users.id = "u001";
+
+
+CREATE TABLE purchases_products (
+    purchase_id TEXT NOT NULL,
+    product_id REAL NOT NULL,
+    quantity INTEGER NOT NULL
+);
+INSERT INTO purchases_products
+VALUES
+    ("pu001", "p002", 1),
+    ("pu001", "p004", 3),
+    ("pu001", "p005", 2),
+    ("pu002", "p004", 5),
+    ("pu003", "p001", 1),
+    ("pu003", "p003", 4);
+SELECT * FROM purchases_products;
+
+SELECT 
+    purchases_products.purchase_id AS compraID,
+    purchases_products.product_id AS produtoID,
+    purchases_products.quantity,
+    purchases.total_price,
+    purchases.paid,
+    purchases.delivered_at,
+    purchases.buyer_id,
+    products.id,
+    products.name,
+    products.price,
+    products.category
+FROM purchases_products
+INNER JOIN purchases
+ON purchases_products.purchase_id = purchases.id
+INNER JOIN products
+ON purchases_products.product_id = products.id

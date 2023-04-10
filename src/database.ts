@@ -10,8 +10,8 @@ export enum CATEGORY {
 export const users: TUser[] = [
     {
         id: 'u001',
-        email: 'emaildo@gmeidev.com',
-        password: 'senhadagota'
+        email: 'anabarbiepocket@gmeioso.com.com',
+        password: 'rafaelgc83@gmail.com'
     }, {
         id: 'u002',
         email: 'miminviacarta@gmeioso.com',
