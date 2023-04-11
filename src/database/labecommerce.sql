@@ -37,6 +37,9 @@ VALUES ("p004", "Pipoca", 1, "Food");
 INSERT INTO products(id, name, price, category)
 VALUES ("p005", "Doritos", 7, "Food");
 
+
+
+
 UPDATE products SET price = 10.55 WHERE id = "p002";
 
 SELECT * FROM products WHERE category IN ("Eletronic");
@@ -117,4 +120,24 @@ FROM purchases_products
 INNER JOIN purchases
 ON purchases_products.purchase_id = purchases.id
 INNER JOIN products
-ON purchases_products.product_id = products.id
+ON purchases_products.product_id = products.id;
+
+
+--Aprofundamento Knex
+-- id, buyer_id, total_price, paid, delivered_at
+INSERT INTO products(id, name, price, category)
+VALUES ("p006", "Teclado Gamer", 300, "Eletronic");
+INSERT INTO products(id, name, price, category)
+VALUES ("p007", "Mouse Gamer", 200, "Eletronic");
+INSERT INTO products(id, name, price, category)
+VALUES ("p008", "Pasta térmica", 30, "Eletronic");
+INSERT INTO purchases
+VALUES
+    ("pu006", "u003", 560, 1, DATETIME("now", "localtime"));
+
+-- purchase_id, product_id, quantity
+INSERT INTO purchases_products
+VALUES
+    ("pu006", "p006", 1),
+    ("pu006", "p007", 1),
+    ("pu006", "p008", 2);
