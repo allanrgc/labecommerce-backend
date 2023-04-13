@@ -10,12 +10,14 @@ export enum CATEGORY {
 export const users: TUser[] = [
     {
         id: 'u001',
+        name: 'ana',
         email: 'anabarbiepocket@gmeioso.com.com',
-        password: 'rafaelgc83@gmail.com'
+        password: '141415'
     }, {
         id: 'u002',
-        email: 'miminviacarta@gmeioso.com',
-        password: 'senhadoquere'
+        name: 'Anonymous',
+        email: 'senhordev@gmail.com',
+        password: 'senha1236'
     }
 ];
 
@@ -33,7 +35,7 @@ export const products: TProduct[] = [
     }
 ];
 
-export const purchase: TPurchase[] = [
+export const purchases: TPurchase[] = [
     {
         userId: 'b001',
         productId: 'p003',
@@ -47,7 +49,7 @@ export const purchase: TPurchase[] = [
     }
 ];
 
-export const createUser = (id: string, email: string, password: string): void => {
+export const createUser = (id: string, name:string, email: string, password: string): void => {
     const userExist = users.find(user => {
         return user.id === id || user.email === email
     })
@@ -57,6 +59,7 @@ export const createUser = (id: string, email: string, password: string): void =>
     } else {
         users.push({
             id,
+            name,
             email,
             password
         })
@@ -121,14 +124,14 @@ export const getAllUsers = ():void => {
     }
 
     export const createPurchase = (userId: string, productId: string, quantity: number, totalPrice: number): void => {
-        const alrBought = purchase.find(product => {
+        const alrBought = purchases.find(product => {
             return product.userId === userId || product.productId === productId
         })
     
         if(alrBought){
             console.log("Produto já comprado")
         } else {
-            purchase.push({
+            purchases.push({
                 userId,
                 productId,
                 quantity,
