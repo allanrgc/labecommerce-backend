@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
-import { users, products, purchase, CATEGORY, createUser, getAllUsers, getAllProducts, getAllProductsById, queryProductsByName } from "./database"
+import { users, products, purchases, CATEGORY, createUser, getAllUsers, getAllProducts, getAllProductsById, queryProductsByName } from "./database"
 import { TProduct, TUser, TPurchase } from './types'
 import { db } from './database/knex'
 // console.log(users, products, purchase)
@@ -172,6 +172,7 @@ app.get('/users/:id/purchases', async (req: Request, res: Response) => {
     }
     
 })
+// GET Purchase by ID
 app.get('/purchases/:id', async (req: Request, res: Response) => {
     try {
          const id = req.params.id
@@ -226,6 +227,7 @@ app.post ('/users', async (req: Request, res: Response) => {
     try {
         // pegar os dados: id, email, password
         const id = req.body.id as string
+        const name = req.body.name as string
         const email = req.body.email as string
         const password = req.body.password as string
 
@@ -242,6 +244,7 @@ app.post ('/users', async (req: Request, res: Response) => {
 
         const newUser: TUser = {
             id,
+            name,
             email,
             password,
         }
@@ -249,8 +252,8 @@ app.post ('/users', async (req: Request, res: Response) => {
         //const { id, name, lessons, stack } = body
         users.push(newUser)
         await db.raw(`
-            INSERT INTO users(id, email, password)
-                VALUES ("${newUser.id}", "${newUser.email}", "${newUser.password}");
+            INSERT INTO users(id, email, name, password)
+                VALUES ("${newUser.id}", "${newUser.name}", "${newUser.email}", "${newUser.password}");
             `)
         
         // if(newUser.id === id){
@@ -484,6 +487,32 @@ app.delete('/products/:id', (req: Request, res: Response) => {
         products.splice(deleteProduct, 1)
 
         res.status(200).send("Produto apagado com sucesso")  
+    } catch (error) {
+        console.log(error)
+        if(res.statusCode === 200){
+            res.status(500)
+        }
+        if(error instanceof Error){
+            res.send(error.message)
+        } else {
+            res.send("Erro inesperado")
+        }
+    }
+    
+})
+app.delete('/purchases/:id', async (req: Request, res: Response) => {
+    try {
+        const idToDelete = req.params.id
+        const [purchase] = await db("purchases").where({id: idToDelete})
+
+        if (purchase){
+            await db("purchase").del().where({id: idToDelete});
+        }else{
+            res.status(400)
+            throw new Error("Id não encontrado")
+        }
+
+        res.status(200).send("Purchase apagado com sucesso")  
     } catch (error) {
         console.log(error)
         if(res.statusCode === 200){
