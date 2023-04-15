@@ -3,7 +3,6 @@ import cors from 'cors'
 import { users, products, purchases, CATEGORY, createUser, getAllUsers, getAllProducts, getAllProductsById, queryProductsByName } from "./database"
 import { TProduct, TUser, TPurchase } from './types'
 import { db } from './database/knex'
-// console.log(users, products, purchase)
 const app = express()
 
 app.use(express.json())
@@ -12,16 +11,6 @@ app.use(cors())
 app.listen(3003, () => {
     console.log("Servidor rodando na porta 3003")
 })
-
-// createUser("0", "imeiu@email.com", "123123")
-
-// getAllUsers()
-
-// getAllProducts()
-
-// getAllProductsById()
-
-// queryProductsByName("almofada")
 
 app.get('/ping', (req: Request, res: Response) => {
     res.send('Pong')
@@ -99,7 +88,6 @@ app.get('/products/search', async (req: Request, res: Response) => {
     }
     
 })
-// GET All Users by ID
 app.get("/users/:id", (req: Request, res: Response) => {
     try {
        const id = req.params.id
@@ -124,7 +112,6 @@ app.get("/users/:id", (req: Request, res: Response) => {
     }
     
 })
-// GET produto by ID
 app.get('/products/:id', async (req: Request, res: Response) => {
     try {
          const id = req.params.id
@@ -148,7 +135,6 @@ app.get('/products/:id', async (req: Request, res: Response) => {
     }
    
 })
-// GET Purchase by User ID
 app.get('/users/:id/purchases', async (req: Request, res: Response) => {
     try {
        const userId = req.params.id
@@ -172,7 +158,6 @@ app.get('/users/:id/purchases', async (req: Request, res: Response) => {
     }
     
 })
-// GET Purchase by ID
 app.get('/purchases/:id', async (req: Request, res: Response) => {
     try {
          const id = req.params.id
@@ -221,7 +206,6 @@ app.get('/purchases/:id', async (req: Request, res: Response) => {
    
 })
 
-// POST criando um novo Usuário, produto e compra
 
 app.post ('/users', async (req: Request, res: Response) => {
     try {
@@ -280,7 +264,6 @@ app.post ('/users', async (req: Request, res: Response) => {
     
     
 })
-
 app.post ('/products', async (req: Request, res: Response) => {
     try {
           // pegar os dados: id, name, price e category
@@ -358,7 +341,6 @@ app.post ('/purchases', async (req: Request, res: Response) => {
         }
     }
 })
-
 app.post ('/purchases', async (req: Request, res: Response) => {
     try {
   const id = req.body.id as string
@@ -384,8 +366,6 @@ app.post ('/purchases', async (req: Request, res: Response) => {
   
 })
 
-
-//PUT - Editar by id
 
 app.put("/users/:id", (req:Request, res:Response) => {
     try {
@@ -417,7 +397,6 @@ app.put("/users/:id", (req:Request, res:Response) => {
     }
     
 })
-
 app.put("/products/:id", (req:Request, res:Response) => {
     try {
         const id = req.params.id
@@ -450,7 +429,7 @@ app.put("/products/:id", (req:Request, res:Response) => {
     
 })
 
-// DELETE by id
+
 app.delete('/users/:id', (req: Request, res: Response) => {
     try {
        const id = req.params.id
